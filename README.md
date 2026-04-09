@@ -24,6 +24,9 @@ A small REST API for storing schools in MySQL and listing them by distance from 
 
 ```
 CampusCompass/
+├── scripts/
+│   ├── apply-schema.ps1    # Windows: create DB + apply schema (mysql.exe path)
+│   └── sample-add-school.ps1  # Windows: POST sample JSON via Invoke-RestMethod
 ├── sql/
 │   └── schema.sql          # CREATE TABLE schools
 ├── postman/
@@ -127,6 +130,26 @@ npm test
 ```
 
 Tests that require MySQL will **skip** if the database is unreachable; validation tests still run. To run the full suite, start MySQL and ensure `.env` points at a database where `sql/schema.sql` has been applied.
+
+### Windows PowerShell: calling `POST /addSchool`
+
+PowerShell does **not** parse `curl.exe -d "{\"name\":...}"` like bash. Quotes and spaces in the JSON often break the command (`Could not resolve host`, `URL rejected`, etc.).
+
+Use **`Invoke-RestMethod`** and put the JSON in **single quotes** (no backslash escaping):
+
+```powershell
+Invoke-RestMethod -Method Post -Uri http://localhost:3000/addSchool `
+  -ContentType "application/json" `
+  -Body '{"name":"Test High","address":"1 Main St","latitude":40.7,"longitude":-74.0}'
+```
+
+Or run the helper script (from the project folder):
+
+```powershell
+.\scripts\sample-add-school.ps1
+```
+
+If the response is **`500` / `Internal server error`**, the request reached the server but the database step failed. Confirm MySQL is running, `.env` matches your server, and `sql/schema.sql` was applied—then check the **terminal where `npm start` is running** for the underlying error.
 
 ## API
 

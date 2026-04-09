@@ -39,6 +39,19 @@ test("GET /addSchool returns 200 with POST instructions (browser GET)", async ()
   assert.equal(res.body.data.method, "POST");
 });
 
+test("GET /listSchool redirects to /listSchools (typo)", async () => {
+  const res = await request(app)
+    .get("/listSchool")
+    .query({ latitude: "40", longitude: "-74" })
+    .redirects(0);
+  assert.equal(res.status, 308);
+  assert.match(res.headers.location, /\/listSchools/);
+  assert.ok(
+    res.headers.location.includes("latitude") &&
+      res.headers.location.includes("longitude")
+  );
+});
+
 test("POST /addSchool returns 400 when payload is invalid", async () => {
   const res = await request(app).post("/addSchool").send({
     name: "",
