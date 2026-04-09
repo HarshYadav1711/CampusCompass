@@ -28,6 +28,15 @@
         "url": "{{baseUrl}}/addSchool",
         "description": "Requires MySQL and sql/schema.sql applied. Set baseUrl if not localhost:3000."
       }
+    },
+    {
+      "name": "List schools by distance",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/listSchools?latitude=40.7128&longitude=-74.006",
+        "description": "Query: latitude and longitude (required). Nearest schools first."
+      }
     }
   ]
 }
