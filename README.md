@@ -90,7 +90,7 @@ PowerShell cannot find the MySQL **client** if the server tools are not installe
 
 3. **No CLI:** Open **MySQL Workbench** (or another GUI), connect to your server, run `CREATE DATABASE IF NOT EXISTS campuscompass;`, select that schema, then open `sql/schema.sql` and execute its contents.
 
-Table columns: `id` (auto-increment), `name`, `address`, `latitude`, `longitude`.
+Table columns: `id` (auto-increment), `name`, `address`, `latitude` (FLOAT), `longitude` (FLOAT).
 
 ## Environment variables
 
