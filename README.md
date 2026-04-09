@@ -6,7 +6,7 @@ A small REST API for storing schools in MySQL and listing them by distance from 
 
 1. `npm install` → copy `.env.example` to `.env` and set MySQL credentials.
 2. Create the database and run `sql/schema.sql` (see [Database setup](#database-setup)).
-3. `npm start`, then import `postman/CampusCompass.postman_collection.json` or call the endpoints with curl.
+3. `npm start`, then open `http://localhost:3000/` for a short JSON summary of the two API routes, or import `postman/CampusCompass.postman_collection.json` / use curl.
 4. `npm test` runs validation checks without MySQL; full tests need a reachable database.
 
 ## Tech stack
@@ -56,6 +56,36 @@ CampusCompass/
    ```bash
    mysql -u root -p campuscompass < sql/schema.sql
    ```
+
+**Windows: `mysql` is not recognized**
+
+That only means the **`mysql` command is not on your PATH** — MySQL may still be installed. This repo includes a helper script that calls `mysql.exe` by full path:
+
+```powershell
+cd path\to\CampusCompass
+powershell -ExecutionPolicy Bypass -File scripts\apply-schema.ps1
+```
+
+Enter your MySQL `root` password when prompted (XAMPP often uses a blank password: press Enter).
+
+---
+
+PowerShell cannot find the MySQL **client** if the server tools are not installed or not on your `PATH`. You can also:
+
+1. **Use the full path** (adjust version folder if yours differs):
+
+   ```powershell
+   & "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" -u root -p -e "CREATE DATABASE IF NOT EXISTS campuscompass;"
+   Get-Content sql/schema.sql | & "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" -u root -p campuscompass
+   ```
+
+   (Bash-style `< sql/schema.sql` is unreliable in PowerShell; piping with `Get-Content` works. Or use `cmd /c "mysql ... < sql/schema.sql"` from the project folder.)
+
+   If `Program Files (x86)` or a different version is installed, browse to `...\MySQL\...\bin\mysql.exe` in Explorer and use that path.
+
+2. **Add MySQL `bin` to PATH** (Settings → Environment Variables → Path → add `...\MySQL Server 8.0\bin`), then open a **new** terminal and run the same `mysql` commands as in steps 1–2 above.
+
+3. **No CLI:** Open **MySQL Workbench** (or another GUI), connect to your server, run `CREATE DATABASE IF NOT EXISTS campuscompass;`, select that schema, then open `sql/schema.sql` and execute its contents.
 
 Table columns: `id` (auto-increment), `name`, `address`, `latitude`, `longitude`.
 
@@ -107,6 +137,8 @@ All JSON responses use `{ "success": true, "data": ... }` or `{ "success": false
 ### `POST /addSchool`
 
 Creates one school.
+
+**Note:** Opening `/addSchool` in a browser sends **GET**, which cannot send a JSON body. The API expects **POST**. If you hit **GET /addSchool** (e.g. by typing the URL), the server returns **200** with a short JSON hint explaining how to call **POST** (Postman/curl). Use **POST** for real inserts.
 
 **Body (JSON)**
 

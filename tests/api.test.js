@@ -22,6 +22,23 @@ before(async () => {
   }
 });
 
+test("GET / returns 200 with service summary", async () => {
+  const res = await request(app).get("/");
+  assert.equal(res.status, 200);
+  assert.equal(res.body.success, true);
+  assert.equal(res.body.data.service, "CampusCompass");
+  assert.ok(res.body.data.endpoints.addSchool);
+  assert.ok(res.body.data.endpoints.listSchools);
+});
+
+test("GET /addSchool returns 200 with POST instructions (browser GET)", async () => {
+  const res = await request(app).get("/addSchool");
+  assert.equal(res.status, 200);
+  assert.equal(res.body.success, true);
+  assert.ok(res.body.data.hint);
+  assert.equal(res.body.data.method, "POST");
+});
+
 test("POST /addSchool returns 400 when payload is invalid", async () => {
   const res = await request(app).post("/addSchool").send({
     name: "",
