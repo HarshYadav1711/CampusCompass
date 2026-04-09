@@ -1,0 +1,48 @@
+{
+  "info": {
+    "name": "CampusCompass",
+    "description": "School directory API (POST /addSchool, GET /listSchools)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/health"
+      }
+    },
+    {
+      "name": "Add school",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Riverside Academy\",\n  \"address\": \"100 Campus Way\",\n  \"latitude\": 40.7128,\n  \"longitude\": -74.006\n}"
+        },
+        "url": "{{baseUrl}}/addSchool"
+      }
+    },
+    {
+      "name": "List schools (by proximity)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/listSchools?latitude=40.7128&longitude=-74.006"
+      }
+    }
+  ]
+}
