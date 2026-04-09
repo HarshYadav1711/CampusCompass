@@ -1,11 +1,7 @@
 const { pool } = require("../db/pool");
 const { haversineDistanceKm } = require("../utils/haversine");
 
-/**
- * Inserts a school row. Controllers should call this instead of touching SQL directly.
- * @param {{ name: string, address: string, latitude: number, longitude: number }} input
- * @returns {Promise<{ id: number, name: string, address: string, latitude: number, longitude: number }>}
- */
+/** Parameterized INSERT into `schools`. */
 async function insertSchool(input) {
   const { name, address, latitude, longitude } = input;
   const sql = `
@@ -27,12 +23,7 @@ async function insertSchool(input) {
   };
 }
 
-/**
- * Loads all schools, attaches Haversine distance from the user point, sorts nearest first.
- * @param {number} userLatitude
- * @param {number} userLongitude
- * @returns {Promise<Array<{ id: number, name: string, address: string, latitude: number, longitude: number, distanceKm: number }>>}
- */
+/** SELECT all rows, compute distance (km), sort nearest first. */
 async function listSchoolsByDistance(userLatitude, userLongitude) {
   const sql = `
     SELECT id, name, address, latitude, longitude

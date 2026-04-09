@@ -13,7 +13,7 @@ function createApp() {
   registerBrowserHints(app);
   app.use(routes);
   app.use(notFound);
-  app.use(errorHandler); // must be last
+  app.use(errorHandler);
   return app;
 }
 

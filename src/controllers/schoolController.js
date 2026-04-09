@@ -3,7 +3,6 @@ const { validateAddSchool } = require("../validators/addSchool");
 const { validateListSchoolsQuery } = require("../validators/listSchoolsQuery");
 const schoolService = require("../services/schoolService");
 
-/** POST /addSchool */
 async function addSchool(req, res, next) {
   const result = validateAddSchool(req.body);
   if (!result.ok) {
@@ -18,14 +17,13 @@ async function addSchool(req, res, next) {
   }
 }
 
-/** GET /listSchools */
 async function listSchools(req, res, next) {
   const result = validateListSchoolsQuery(req.query);
   if (!result.ok) {
     let message = "Validation failed";
     if (result.fieldErrors.latitude && result.fieldErrors.longitude) {
       message =
-        "Validation failed. In the address bar, include both query parameters, e.g. /listSchools?latitude=40.7128&longitude=-74.006";
+        "Validation failed. Add both query parameters, for example: /listSchools?latitude=40.7128&longitude=-74.006";
     }
     return apiResponse.fail(res, 400, message, result.fieldErrors);
   }

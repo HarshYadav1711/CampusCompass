@@ -1,7 +1,3 @@
-/**
- * Shared latitude/longitude parsing for bodies and query strings.
- * @returns {{ ok: true, value: number } | { ok: false, message: string }}
- */
 function parseLatitude(value) {
   if (value === undefined || value === null) {
     return { ok: false, message: "latitude is required" };

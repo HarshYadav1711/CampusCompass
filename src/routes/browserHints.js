@@ -1,7 +1,3 @@
-/**
- * GET handlers for browsers (address bar sends GET only).
- * Registered on the main app before other routers so they always match.
- */
 const apiResponse = require("../utils/apiResponse");
 
 function registerBrowserHints(app) {
@@ -18,9 +14,8 @@ function registerBrowserHints(app) {
   });
 
   app.get("/addSchool", (req, res) => {
-    const host = req.get("host") || "localhost:3000";
     return apiResponse.success(res, 200, {
-      hint: `Use POST with a JSON body (not a browser GET). Postman works. On Windows PowerShell use Invoke-RestMethod (see README) or scripts/sample-add-school.ps1 — avoid curl -d with JSON in PowerShell.`,
+      hint: `Browsers open URLs with GET only. To create a school, send POST with JSON (Postman, or PowerShell Invoke-RestMethod / scripts/sample-add-school.ps1 — see README).`,
       method: "POST",
       contentType: "application/json",
       body: {
@@ -32,7 +27,6 @@ function registerBrowserHints(app) {
     });
   });
 
-  /** Typo helper: assignment route is GET /listSchools (plural). */
   app.get("/listSchool", (req, res) => {
     let search = "";
     try {

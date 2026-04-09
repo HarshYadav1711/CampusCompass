@@ -5,7 +5,7 @@ CampusCompass is a Node.js REST API backed by MySQL. It exposes two endpoints: c
 | Resource | Link |
 | --- | --- |
 | **Live API** | Local default: [`http://localhost:3000`](http://localhost:3000) — replace with your deployed base URL when you host it. |
-| **GitHub** | [`https://github.com/YOUR_USERNAME/CampusCompass`](https://github.com/YOUR_USERNAME/CampusCompass) — update to your repository. |
+| **GitHub** | [`https://github.com/HarshYadav1711/CampusCompass`](https://github.com/HarshYadav1711/CampusCompass) — update to your repository. |
 | **Postman** | Import [`postman/CampusCompass.postman_collection.json`](postman/CampusCompass.postman_collection.json) (File → Import in Postman). |
 
 ## Reviewer Quick Start

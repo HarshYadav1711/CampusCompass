@@ -1,17 +1,12 @@
 const { parseLatitude, parseLongitude } = require("./coordinates");
 
-/**
- * Validates GET /listSchools query: latitude, longitude (required).
- * @param {unknown} query - typically req.query
- * @returns {{ ok: true, value: { latitude: number, longitude: number } } | { ok: false, fieldErrors: Record<string, string[]> }}
- */
 function validateListSchoolsQuery(query) {
   const fieldErrors = {};
 
   if (query === null || query === undefined || typeof query !== "object") {
     return {
       ok: false,
-      fieldErrors: { query: ["Query parameters must be provided"] },
+      fieldErrors: { query: ["Invalid query parameters"] },
     };
   }
 

@@ -1,9 +1,4 @@
-/**
- * Haversine formula: great-circle distance between two points on a sphere.
- * Input angles are degrees (WGS84-style latitude/longitude). Result is kilometers.
- *
- * @see https://en.wikipedia.org/wiki/Haversine_formula
- */
+/** Great-circle distance (km); degrees in, kilometers out. See https://en.wikipedia.org/wiki/Haversine_formula */
 
 const EARTH_RADIUS_KM = 6371;
 
@@ -11,13 +6,6 @@ function toRadians(degrees) {
   return (degrees * Math.PI) / 180;
 }
 
-/**
- * @param {number} userLatitude - observer latitude in degrees
- * @param {number} userLongitude - observer longitude in degrees
- * @param {number} schoolLatitude - school latitude in degrees
- * @param {number} schoolLongitude - school longitude in degrees
- * @returns {number} distance in kilometers
- */
 function haversineDistanceKm(
   userLatitude,
   userLongitude,

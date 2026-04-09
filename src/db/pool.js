@@ -1,9 +1,7 @@
 const mysql = require("mysql2/promise");
 const config = require("../config");
 
-/**
- * Shared MySQL pool. Use parameterized queries only (placeholders, never string concat).
- */
+/** Shared MySQL pool; use parameterized queries only. */
 const pool = mysql.createPool({
   host: config.db.host,
   port: config.db.port,

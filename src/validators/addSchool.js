@@ -1,8 +1,3 @@
-/**
- * Validates payload for adding a school (POST body).
- * @param {unknown} body
- * @returns {{ ok: true, value: { name: string, address: string, latitude: number, longitude: number } } | { ok: false, fieldErrors: Record<string, string[]> }}
- */
 const { parseLatitude, parseLongitude } = require("./coordinates");
 
 function validateAddSchool(body) {
