@@ -1,13 +1,20 @@
 # CampusCompass
 
-A small REST API for storing schools in MySQL and listing them by distance from a reference point. It was built as a focused backend exercise: two endpoints, strict validation, parameterized SQL, and Haversine distance calculated in application code.
+CampusCompass is a Node.js REST API backed by MySQL. It exposes two endpoints: create a school with coordinates, and list all schools sorted by distance from a chosen point using the Haversine formula. Validation is strict, SQL uses parameterized queries, and responses follow a single JSON shape.
 
-## Quick verification (reviewers)
+| Resource | Link |
+| --- | --- |
+| **Live API** | Local default: [`http://localhost:3000`](http://localhost:3000) — replace with your deployed base URL when you host it. |
+| **GitHub** | [`https://github.com/YOUR_USERNAME/CampusCompass`](https://github.com/YOUR_USERNAME/CampusCompass) — update to your repository. |
+| **Postman** | Import [`postman/CampusCompass.postman_collection.json`](postman/CampusCompass.postman_collection.json) (File → Import in Postman). |
 
-1. `npm install` → copy `.env.example` to `.env` and set MySQL credentials.
-2. Create the database and run `sql/schema.sql` (see [Database setup](#database-setup)).
-3. `npm start`, then open `http://localhost:3000/` for a short JSON summary of the two API routes, or import `postman/CampusCompass.postman_collection.json` / use curl.
-4. `npm test` runs validation checks without MySQL; full tests need a reachable database.
+## Reviewer Quick Start
+
+1. **Clone and install** — `npm install` in the project root.
+2. **Configure the database** — Copy `.env.example` to `.env`, set `DB_*` values, create a MySQL database, and apply [`sql/schema.sql`](sql/schema.sql) ([Database setup](#database-setup)).
+3. **Run the server** — `npm start`, then open [`http://localhost:3000/`](http://localhost:3000/) for a short JSON summary of routes.
+4. **Exercise the API** — Import the Postman collection above; call `POST /addSchool` and `GET /listSchools?latitude=…&longitude=…`. On Windows PowerShell, use the **Invoke-RestMethod** example in [Run locally](#run-locally) or run `.\scripts\sample-add-school.ps1`.
+5. **Run tests** — `npm test` (core checks run without MySQL; full integration tests need MySQL up and the schema applied).
 
 ## Tech stack
 
