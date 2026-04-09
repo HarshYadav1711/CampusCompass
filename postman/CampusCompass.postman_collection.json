@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "CampusCompass",
-    "description": "CampusCompass API",
+    "description": "Example requests and saved example responses for the CampusCompass API. Import into Postman, set the `baseUrl` variable if needed, and ensure the server and MySQL are running with `sql/schema.sql` applied.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -12,7 +12,7 @@
   ],
   "item": [
     {
-      "name": "Add school",
+      "name": "POST /addSchool",
       "request": {
         "method": "POST",
         "header": [
@@ -26,17 +26,89 @@
           "raw": "{\n  \"name\": \"Riverside Academy\",\n  \"address\": \"100 Campus Way, Springfield\",\n  \"latitude\": 40.7128,\n  \"longitude\": -74.006\n}"
         },
         "url": "{{baseUrl}}/addSchool",
-        "description": "Requires MySQL and sql/schema.sql applied. Set baseUrl if not localhost:3000."
-      }
+        "description": "Creates a school. Body: name, address, latitude, longitude (required). Returns 201 with the created row including `id`, or 400 with validation details."
+      },
+      "response": [
+        {
+          "name": "Example — 201 Created",
+          "originalRequest": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Riverside Academy\",\n  \"address\": \"100 Campus Way, Springfield\",\n  \"latitude\": 40.7128,\n  \"longitude\": -74.006\n}"
+            },
+            "url": "{{baseUrl}}/addSchool"
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": "json",
+          "header": [
+            { "key": "Content-Type", "value": "application/json; charset=utf-8" }
+          ],
+          "body": "{\n  \"success\": true,\n  \"data\": {\n    \"school\": {\n      \"id\": 1,\n      \"name\": \"Riverside Academy\",\n      \"address\": \"100 Campus Way, Springfield\",\n      \"latitude\": 40.7128,\n      \"longitude\": -74.006\n    }\n  }\n}"
+        },
+        {
+          "name": "Example — 400 Validation failed",
+          "originalRequest": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"\",\n  \"address\": \"x\",\n  \"latitude\": 200,\n  \"longitude\": 0\n}"
+            },
+            "url": "{{baseUrl}}/addSchool"
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "_postman_previewlanguage": "json",
+          "header": [
+            { "key": "Content-Type", "value": "application/json; charset=utf-8" }
+          ],
+          "body": "{\n  \"success\": false,\n  \"error\": {\n    \"message\": \"Validation failed\",\n    \"details\": {\n      \"name\": [\"name must be a non-empty string\"],\n      \"latitude\": [\"latitude must be between -90 and 90 inclusive\"]\n    }\n  }\n}"
+        }
+      ]
     },
     {
-      "name": "List schools by distance",
+      "name": "GET /listSchools",
       "request": {
         "method": "GET",
         "header": [],
         "url": "{{baseUrl}}/listSchools?latitude=40.7128&longitude=-74.006",
-        "description": "Query: latitude and longitude (required). Nearest schools first."
-      }
+        "description": "Lists all schools with Haversine distance (km) from the given point, nearest first. Query: latitude, longitude (required). Returns 200 with `schools` array, or 400 if coordinates are missing or invalid."
+      },
+      "response": [
+        {
+          "name": "Example — 200 OK (sorted)",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/listSchools?latitude=40.7128&longitude=-74.006"
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            { "key": "Content-Type", "value": "application/json; charset=utf-8" }
+          ],
+          "body": "{\n  \"success\": true,\n  \"data\": {\n    \"schools\": [\n      {\n        \"id\": 2,\n        \"name\": \"Downtown High\",\n        \"address\": \"5 Main St\",\n        \"latitude\": 40.713,\n        \"longitude\": -74.0062,\n        \"distanceKm\": 0.023\n      },\n      {\n        \"id\": 1,\n        \"name\": \"Riverside Academy\",\n        \"address\": \"100 Campus Way\",\n        \"latitude\": 40.7128,\n        \"longitude\": -74.006,\n        \"distanceKm\": 0.031\n      }\n    ]\n  }\n}"
+        },
+        {
+          "name": "Example — 400 Validation failed",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/listSchools?latitude=100&longitude=0"
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "_postman_previewlanguage": "json",
+          "header": [
+            { "key": "Content-Type", "value": "application/json; charset=utf-8" }
+          ],
+          "body": "{\n  \"success\": false,\n  \"error\": {\n    \"message\": \"Validation failed\",\n    \"details\": {\n      \"latitude\": [\"latitude must be between -90 and 90 inclusive\"]\n    }\n  }\n}"
+        }
+      ]
     }
   ]
 }
