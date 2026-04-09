@@ -184,6 +184,8 @@ Returns all schools with **distance in kilometers** from the given point, **near
 
 **Note:** The path is **`/listSchools`** (plural). If you open **`/listSchool`** by mistake, the server responds with **308** redirect to **`/listSchools`**, keeping the same query string when present.
 
+Typing only **`http://localhost:3000/listSchools`** (no `?latitude=...&longitude=...`) returns **400** because both parameters are required. Use a full URL such as **`http://localhost:3000/listSchools?latitude=40.7128&longitude=-74.006`**.
+
 **Query**
 
 | Parameter | Required | Rules |

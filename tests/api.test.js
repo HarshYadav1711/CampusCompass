@@ -80,6 +80,12 @@ test("GET /listSchools returns 400 when latitude is missing", async () => {
   assert.equal(res.body.success, false);
 });
 
+test("GET /listSchools with no query hints example URL in message", async () => {
+  const res = await request(app).get("/listSchools");
+  assert.equal(res.status, 400);
+  assert.ok(res.body.error.message.includes("listSchools?latitude"));
+});
+
 test("POST /addSchool returns 201 and created school when payload is valid", async (t) => {
   if (!dbAvailable) {
     t.skip("MySQL not reachable — set DB_* in .env and apply sql/schema.sql");

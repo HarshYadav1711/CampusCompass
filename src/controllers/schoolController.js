@@ -22,7 +22,12 @@ async function addSchool(req, res, next) {
 async function listSchools(req, res, next) {
   const result = validateListSchoolsQuery(req.query);
   if (!result.ok) {
-    return apiResponse.fail(res, 400, "Validation failed", result.fieldErrors);
+    let message = "Validation failed";
+    if (result.fieldErrors.latitude && result.fieldErrors.longitude) {
+      message =
+        "Validation failed. In the address bar, include both query parameters, e.g. /listSchools?latitude=40.7128&longitude=-74.006";
+    }
+    return apiResponse.fail(res, 400, message, result.fieldErrors);
   }
 
   try {
