@@ -3,36 +3,32 @@ const { validateAddSchool } = require("../validators/addSchool");
 const { validateListSchoolsQuery } = require("../validators/listSchoolsQuery");
 const schoolService = require("../services/schoolService");
 
-/**
- * POST /addSchool — create a school row after strict validation.
- */
+/** POST /addSchool */
 async function addSchool(req, res, next) {
-  const parsed = validateAddSchool(req.body);
-  if (!parsed.ok) {
-    return apiResponse.fail(res, 400, "Validation failed", parsed.fieldErrors);
+  const result = validateAddSchool(req.body);
+  if (!result.ok) {
+    return apiResponse.fail(res, 400, "Validation failed", result.fieldErrors);
   }
 
   try {
-    const school = await schoolService.insertSchool(parsed.value);
+    const school = await schoolService.insertSchool(result.value);
     return apiResponse.success(res, 201, { school });
   } catch (err) {
     next(err);
   }
 }
 
-/**
- * GET /listSchools — all schools sorted by Haversine distance from ?latitude=&longitude=
- */
+/** GET /listSchools */
 async function listSchools(req, res, next) {
-  const parsed = validateListSchoolsQuery(req.query);
-  if (!parsed.ok) {
-    return apiResponse.fail(res, 400, "Validation failed", parsed.fieldErrors);
+  const result = validateListSchoolsQuery(req.query);
+  if (!result.ok) {
+    return apiResponse.fail(res, 400, "Validation failed", result.fieldErrors);
   }
 
   try {
     const schools = await schoolService.listSchoolsByDistance(
-      parsed.value.latitude,
-      parsed.value.longitude
+      result.value.latitude,
+      result.value.longitude
     );
     return apiResponse.success(res, 200, { schools });
   } catch (err) {

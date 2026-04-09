@@ -1,11 +1,6 @@
-/**
- * Runs after all routes; returns a consistent 404 JSON body.
- */
+const apiResponse = require("../utils/apiResponse");
+
+/** Last route handler: anything not matched above. */
 module.exports = function notFound(req, res) {
-  res.status(404).json({
-    success: false,
-    error: {
-      message: "Not found",
-    },
-  });
+  apiResponse.fail(res, 404, "Not found");
 };

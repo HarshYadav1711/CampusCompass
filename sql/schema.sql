@@ -1,5 +1,5 @@
--- CampusCompass: schools table (MySQL 8+)
--- Run against your database: mysql -u USER -p DB_NAME < sql/schema.sql
+-- CampusCompass — schools table (MySQL 8+)
+-- Apply with your database selected, e.g. mysql -u USER -p DB_NAME < sql/schema.sql
 
 CREATE TABLE IF NOT EXISTS schools (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,

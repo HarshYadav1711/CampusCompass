@@ -2,6 +2,13 @@
 
 A small REST API for storing schools in MySQL and listing them by distance from a reference point. It was built as a focused backend exercise: two endpoints, strict validation, parameterized SQL, and Haversine distance calculated in application code.
 
+## Quick verification (reviewers)
+
+1. `npm install` → copy `.env.example` to `.env` and set MySQL credentials.
+2. Create the database and run `sql/schema.sql` (see [Database setup](#database-setup)).
+3. `npm start`, then import `postman/CampusCompass.postman_collection.json` or call the endpoints with curl.
+4. `npm test` runs validation checks without MySQL; full tests need a reachable database.
+
 ## Tech stack
 
 | Layer | Choice |

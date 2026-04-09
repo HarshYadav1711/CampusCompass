@@ -11,7 +11,7 @@ function createApp() {
   app.use(express.json({ limit: "64kb" }));
   app.use(routes);
   app.use(notFound);
-  app.use(errorHandler);
+  app.use(errorHandler); // must be last
   return app;
 }
 

@@ -1,5 +1,6 @@
 /**
- * Consistent JSON bodies for API responses (matches notFound / errorHandler shape).
+ * Single place for JSON response shape: every route and middleware uses this.
+ * Success: { success, data }. Failure: { success, error: { message, details? } }.
  */
 
 function success(res, statusCode, data) {
@@ -13,19 +14,23 @@ function success(res, statusCode, data) {
  * @param {import('express').Response} res
  * @param {number} statusCode
  * @param {string} message
- * @param {Record<string, string[]>} [fieldErrors] — optional per-field messages
+ * @param {Record<string, string[]>} [fieldErrors] — omitted when not validation-related
  */
 function fail(res, statusCode, message, fieldErrors) {
-  const body = {
+  const payload = {
     success: false,
     error: {
       message,
     },
   };
-  if (fieldErrors !== undefined && fieldErrors !== null) {
-    body.error.details = fieldErrors;
+  if (
+    fieldErrors !== undefined &&
+    fieldErrors !== null &&
+    Object.keys(fieldErrors).length > 0
+  ) {
+    payload.error.details = fieldErrors;
   }
-  return res.status(statusCode).json(body);
+  return res.status(statusCode).json(payload);
 }
 
 module.exports = {

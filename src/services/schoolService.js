@@ -40,7 +40,7 @@ async function listSchoolsByDistance(userLatitude, userLongitude) {
   `;
   const [rows] = await pool.execute(sql);
 
-  const withDistance = rows.map((row) => {
+  const schoolsWithDistance = rows.map((row) => {
     const schoolLatitude = Number(row.latitude);
     const schoolLongitude = Number(row.longitude);
     const distanceKmRaw = haversineDistanceKm(
@@ -59,8 +59,8 @@ async function listSchoolsByDistance(userLatitude, userLongitude) {
     };
   });
 
-  withDistance.sort((a, b) => a.distanceKm - b.distanceKm);
-  return withDistance;
+  schoolsWithDistance.sort((a, b) => a.distanceKm - b.distanceKm);
+  return schoolsWithDistance;
 }
 
 module.exports = {
