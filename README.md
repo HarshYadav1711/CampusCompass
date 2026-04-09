@@ -14,7 +14,7 @@ CampusCompass is a Node.js REST API backed by MySQL. It exposes two endpoints: c
 2. **Configure the database** — Copy `.env.example` to `.env`, set `DB_*` values, create a MySQL database, and apply [`sql/schema.sql`](sql/schema.sql) ([Database setup](#database-setup)).
 3. **Run the server** — `npm start`, then open [`http://localhost:3000/`](http://localhost:3000/) for a short JSON summary of routes.
 4. **Exercise the API** — Import the Postman collection above; call `POST /addSchool` and `GET /listSchools?latitude=…&longitude=…`. On Windows PowerShell, use the **Invoke-RestMethod** example in [Run locally](#run-locally) or run `.\scripts\sample-add-school.ps1`.
-5. **Run tests** — `npm test` (core checks run without MySQL; full integration tests need MySQL up and the schema applied).
+5. **Run tests** — `npm test` (see [Testing](#testing)).
 
 ## Tech stack
 
@@ -130,13 +130,25 @@ Development with watch:
 npm run dev
 ```
 
-**Tests**
+### Testing
+
+Run the test suite from the project folder:
 
 ```bash
 npm test
 ```
 
-Tests that require MySQL will **skip** if the database is unreachable; validation tests still run. To run the full suite, start MySQL and ensure `.env` points at a database where `sql/schema.sql` has been applied.
+**What runs without a database**  
+Some checks only exercise the HTTP layer and validation (for example, bad requests and missing fields). Those can run even when MySQL is not running.
+
+**What needs a database**  
+Tests that add a row and list schools talk to MySQL. They are skipped automatically if the database is not reachable.
+
+**How to run the full suite**  
+1. Start MySQL on your machine.  
+2. Copy `.env.example` to `.env` and fill in `DB_HOST`, `DB_USER`, `DB_PASSWORD`, and `DB_NAME` so they match your server.  
+3. Create the database and apply `sql/schema.sql` (see [Database setup](#database-setup)).  
+4. Run `npm test` again.
 
 ### Windows PowerShell: calling `POST /addSchool`
 
