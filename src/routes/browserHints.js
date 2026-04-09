@@ -11,7 +11,8 @@ function registerBrowserHints(app) {
       endpoints: {
         addSchool:
           "POST /addSchool — body: name, address, latitude, longitude (JSON). GET /addSchool only shows help.",
-        listSchools: "GET /listSchools — query: latitude, longitude",
+        listSchools:
+          "GET /listSchools — query: latitude, longitude (note the s; /listSchool redirects here)",
       },
     });
   });

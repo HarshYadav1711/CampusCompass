@@ -182,6 +182,8 @@ Creates one school.
 
 Returns all schools with **distance in kilometers** from the given point, **nearest first**. Distance is computed with the Haversine formula in code (not in MySQL).
 
+**Note:** The path is **`/listSchools`** (plural). If you open **`/listSchool`** by mistake, the server responds with **308** redirect to **`/listSchools`**, keeping the same query string when present.
+
 **Query**
 
 | Parameter | Required | Rules |
