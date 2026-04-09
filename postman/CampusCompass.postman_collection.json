@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "CampusCompass",
-    "description": "School directory API (POST /addSchool, GET /listSchools)",
+    "description": "CampusCompass API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -11,14 +11,6 @@
     }
   ],
   "item": [
-    {
-      "name": "Health",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": "{{baseUrl}}/health"
-      }
-    },
     {
       "name": "Add school",
       "request": {
@@ -31,17 +23,10 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"name\": \"Riverside Academy\",\n  \"address\": \"100 Campus Way\",\n  \"latitude\": 40.7128,\n  \"longitude\": -74.006\n}"
+          "raw": "{\n  \"name\": \"Riverside Academy\",\n  \"address\": \"100 Campus Way, Springfield\",\n  \"latitude\": 40.7128,\n  \"longitude\": -74.006\n}"
         },
-        "url": "{{baseUrl}}/addSchool"
-      }
-    },
-    {
-      "name": "List schools (by proximity)",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": "{{baseUrl}}/listSchools?latitude=40.7128&longitude=-74.006"
+        "url": "{{baseUrl}}/addSchool",
+        "description": "Requires MySQL and sql/schema.sql applied. Set baseUrl if not localhost:3000."
       }
     }
   ]

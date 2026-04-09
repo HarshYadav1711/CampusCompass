@@ -1,7 +1,8 @@
 const express = require("express");
+const schoolRoutes = require("./schoolRoutes");
 
 const router = express.Router();
 
-// Mount feature routers here, e.g. router.use("/schools", schoolRoutes);
+router.use(schoolRoutes);
 
 module.exports = router;
