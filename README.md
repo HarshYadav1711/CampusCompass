@@ -164,6 +164,12 @@ Base URL: `http://localhost:PORT` (default port `3000`).
 
 All JSON responses use `{ "success": true, "data": ... }` or `{ "success": false, "error": { "message", "details"? } }` unless noted.
 
+### Assignment Scope
+
+Assignment-required endpoints are **`POST /addSchool`** and **`GET /listSchools`**.  
+Additional GET routes (`/`, `/addSchool` help, and `/listSchool` → `/listSchools` redirect) are included only to make manual testing easier in a browser.  
+They do not change data flow, validation, or database logic for the core assignment behavior.
+
 ### `POST /addSchool`
 
 Creates one school.
